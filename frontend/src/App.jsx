@@ -2,6 +2,7 @@ import waldoImg from "./assets/wheres-waldo.avif";
 import './App.css'
 import Dropdown from "./components/dropdown/Dropdown";
 import { useState } from "react";
+const API_URL = import.meta.env.VITE_API_URL;
 
 function App() {
   const [coordinates, setCoordinates] = useState();
@@ -26,10 +27,21 @@ function App() {
     }
   }
 
-  function handleCharacterSelect(e) {
-    //Post request to backend with coordinates and character selection
-    console.log(e.target.textContent); // character selection
-    console.log(coordinates);
+  async function handleCharacterSelect(e) {
+    const character = e.target.textContent;
+
+    const res = await fetch(`${API_URL}/game/attempt`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "Application/json"
+      },
+      body: JSON.stringify({
+        character: character,
+        x: coordinates.x,
+        y: coordinates.y
+      })
+    });
+    console.log(await (res.json()));
 
     setDropdownCoordinates(null); // Remove dropdown
   }
