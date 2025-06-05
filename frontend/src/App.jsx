@@ -45,6 +45,9 @@ function App() {
     });
     const resJson = await (res.json());
     setAttemptRes(resJson);
+    setTimeout(() => {
+      setAttemptRes(null)
+    }, 2000)
 
     setDropdownCoordinates(null); // Remove dropdown
   }
@@ -54,7 +57,9 @@ function App() {
       <h1>Where's Waldo?</h1>
       <img src={waldoImg} alt="Where's Waldo" onClick={handleClick}/>
       <Dropdown coordinates={dropdownCoordinates} handleSelect={handleCharacterSelect}/>
-      <MessageBox attemptRes={attemptRes}/>
+      { attemptRes ?
+        <MessageBox attemptRes={attemptRes}/>
+        : null }
     </>
   )
 }
