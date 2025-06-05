@@ -1,12 +1,14 @@
 import waldoImg from "./assets/wheres-waldo.avif";
 import './App.css'
 import Dropdown from "./components/dropdown/Dropdown";
+import MessageBox from "./components/messageBox/MessageBox";
 import { useState } from "react";
 const API_URL = import.meta.env.VITE_API_URL;
 
 function App() {
   const [coordinates, setCoordinates] = useState();
   const [dropdownCoordinates, setDropdownCoordinates] = useState();
+  const [attemptRes, setAttemptRes] = useState(null);
 
   function getNormalizedCoordinates(e) {
     const xAbs = e.pageX - e.target.offsetLeft;
@@ -41,7 +43,8 @@ function App() {
         y: coordinates.y
       })
     });
-    console.log(await (res.json()));
+    const resJson = await (res.json());
+    setAttemptRes(resJson);
 
     setDropdownCoordinates(null); // Remove dropdown
   }
@@ -51,6 +54,7 @@ function App() {
       <h1>Where's Waldo?</h1>
       <img src={waldoImg} alt="Where's Waldo" onClick={handleClick}/>
       <Dropdown coordinates={dropdownCoordinates} handleSelect={handleCharacterSelect}/>
+      <MessageBox attemptRes={attemptRes}/>
     </>
   )
 }
