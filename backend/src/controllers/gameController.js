@@ -1,4 +1,7 @@
 const prisma = require("../config/prisma");
+const jwt = require("jsonwebtoken");
+const crypto = require("crypto");
+require("dotenv").config();
 
 async function attemptPost(req, res) {
     const charAttempt = req.body.character.toLowerCase();
@@ -36,6 +39,21 @@ async function attemptPost(req, res) {
     res.json({ correct: true, message: "Correct!" });
 }
 
+function startGameGet(req, res) {
+    const payload = {
+        id: crypto.randomUUID(),
+        issuedAt: Date.now(),
+        charactersLeft: ["waldo", "odlaw", "wizard"]
+    }
+
+    jwt.sign({payload}, process.env.JWT_SECRET, (error, token) => {
+        res.json({
+            token: "Bearer " + token
+        })
+    });    
+};
+
 module.exports = {
     attemptPost,
+    startGameGet,
 }
