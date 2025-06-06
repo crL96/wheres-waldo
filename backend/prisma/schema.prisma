@@ -21,3 +21,9 @@ model Character {
   minY Float
   maxY Float
 }
+
+model Score {
+  id             String @id
+  name           String
+  timeToComplete Int
+}
