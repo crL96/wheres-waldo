@@ -47,8 +47,10 @@ function App() {
       })
     });
     const resJson = await (res.json());
-    // Update jwt token
-    sessionStorage.setItem("jwt-token", resJson.token);
+    // Update jwt token if a new one is returned
+    if(resJson.token) {
+      sessionStorage.setItem("jwt-token", resJson.token);
+    }
     if (resJson.gameComplete) {
       setScore(resJson.gameComplete);
     }
