@@ -7,5 +7,6 @@ router.post("/attempt", verifyToken, controller.attemptPost);
 router.get("/start", controller.startGameGet);
 
 router.post("/leaderboard", verifyToken, controller.leaderboardPost);
+router.get("/leaderboard", controller.leaderboardGet);
 
 module.exports = router;

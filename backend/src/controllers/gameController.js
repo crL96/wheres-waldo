@@ -99,8 +99,29 @@ async function leaderboardPost(req, res) {
     }
 }
 
+async function leaderboardGet(req, res) {
+    try {
+        const leaderboard = await prisma.score.findMany({
+            select: {
+                name: true,
+                timeToComplete: true,
+            },
+            orderBy: {
+                timeToComplete: "asc",
+            }
+        })
+        res.json({
+            leaderboard,
+            success: true,
+        })
+    } catch (error) {
+        res.sendStatus(500);
+    }
+}
+
 module.exports = {
     attemptPost,
     startGameGet,
     leaderboardPost,
+    leaderboardGet,
 }
