@@ -1,7 +1,8 @@
 const API_URL = import.meta.env.VITE_API_URL;
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Endscreen({ score }) {
+    const navigate = useNavigate();
 
     async function handleScoreSubmit(e) {
         e.preventDefault();
@@ -20,9 +21,8 @@ function Endscreen({ score }) {
                     name: name,
                 })
             });
-            if (res.status(200)) {
-                //TODO redirect to leaderboard page once implemented
-                console.log(res);
+            if (res.status === 200) {
+                navigate("/leaderboard");
             } else {
                 console.log("Response status code: " + res.status);
             }
