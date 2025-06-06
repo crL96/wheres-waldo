@@ -2,6 +2,7 @@ import waldoImg from "./assets/wheres-waldo.avif";
 import './App.css'
 import Dropdown from "./components/dropdown/Dropdown";
 import MessageBox from "./components/messageBox/MessageBox";
+import Endscreen from "./components/endscreen/Endscreen";
 import { useState } from "react";
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -9,6 +10,7 @@ function App() {
   const [coordinates, setCoordinates] = useState();
   const [dropdownCoordinates, setDropdownCoordinates] = useState();
   const [attemptRes, setAttemptRes] = useState(null);
+  const [score, setScore] = useState(null);
 
   function getNormalizedCoordinates(e) {
     const xAbs = e.pageX - e.target.offsetLeft;
@@ -35,7 +37,8 @@ function App() {
     const res = await fetch(`${API_URL}/game/attempt`, {
       method: "POST",
       headers: {
-        "Content-Type": "Application/json"
+        "Content-Type": "Application/json",
+        "authorization": sessionStorage.getItem("jwt-token"),
       },
       body: JSON.stringify({
         character: character,
@@ -44,6 +47,12 @@ function App() {
       })
     });
     const resJson = await (res.json());
+    // Update jwt token
+    sessionStorage.setItem("jwt-token", resJson.token);
+    if (resJson.gameComplete) {
+      setScore(resJson.gameComplete);
+    }
+
     setAttemptRes(resJson);
     setTimeout(() => {
       setAttemptRes(null)
@@ -59,6 +68,9 @@ function App() {
       <Dropdown coordinates={dropdownCoordinates} handleSelect={handleCharacterSelect}/>
       { attemptRes ?
         <MessageBox attemptRes={attemptRes}/>
+        : null }
+      { score ? 
+        <Endscreen score={score} />
         : null }
     </>
   )
