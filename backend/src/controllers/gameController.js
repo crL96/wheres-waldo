@@ -35,15 +35,31 @@ async function attemptPost(req, res) {
         return
     }
 
-    // Guess must be correct, return success
-    res.json({ correct: true, message: "Correct!" });
+    // Guess must be correct, update gameSession token and return it
+    req.gameSession.charactersLeft = 
+    req.gameSession.charactersLeft.filter((char) => char != charAttempt);
+
+    //Check if all characters have been found, if so game completed
+    if (req.gameSession.charactersLeft.length === 0) {
+        req.gameSession.timeToComplete = Date.now() - req.gameSession.issuedAt;
+    }
+
+    jwt.sign({payload: req.gameSession}, process.env.JWT_SECRET, (error, token) => {
+        res.json({
+            token: "Bearer " + token,
+            correct: true,
+            message: "Correct",
+            gameComplete: (req.gameSession.charactersLeft.length === 0)
+        })
+    });
 }
 
 function startGameGet(req, res) {
     const payload = {
         id: crypto.randomUUID(),
         issuedAt: Date.now(),
-        charactersLeft: ["waldo", "odlaw", "wizard"]
+        charactersLeft: ["waldo", "odlaw", "wizard"],
+        timeToComplete: null,
     }
 
     jwt.sign({payload}, process.env.JWT_SECRET, (error, token) => {
