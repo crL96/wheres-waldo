@@ -69,7 +69,34 @@ function startGameGet(req, res) {
     });    
 };
 
+async function leaderboardPost(req, res) {
+    if (req.gameSession.timeToComplete === null) {
+        res.sendStatus(403);
+        return;
+    }
+    if (!req.body.name) {
+        res.sendStatus(400);
+        return;
+    }
+    try {
+        await prisma.score.create({
+            data: {
+                id: req.gameSession.id,
+                name: req.body.name,
+                timeToComplete: req.gameSession.timeToComplete
+            }
+        })
+        res.json({
+            message: "Score posted to leaderboard",
+            success: true,
+        })
+    } catch (error) {
+        res.sendStatus(500);
+    }
+}
+
 module.exports = {
     attemptPost,
     startGameGet,
+    leaderboardPost,
 }
