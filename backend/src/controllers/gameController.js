@@ -49,7 +49,11 @@ async function attemptPost(req, res) {
             token: "Bearer " + token,
             correct: true,
             message: "Correct",
-            gameComplete: (req.gameSession.charactersLeft.length === 0)
+            gameComplete: (
+                req.gameSession.charactersLeft.length === 0 ? 
+                req.gameSession.timeToComplete : 
+                false
+            )
         })
     });
 }
