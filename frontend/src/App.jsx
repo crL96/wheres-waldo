@@ -74,7 +74,7 @@ function App() {
         <Characters characters={charactersLeft}/>
       </header>
       <img src={waldoImg} alt="Where's Waldo" onClick={handleClick}/>
-      <Dropdown coordinates={dropdownCoordinates} handleSelect={handleCharacterSelect}/>
+      <Dropdown coordinates={dropdownCoordinates} handleSelect={handleCharacterSelect} characters={charactersLeft}/>
       { attemptRes ?
         <MessageBox attemptRes={attemptRes}/>
         : null }

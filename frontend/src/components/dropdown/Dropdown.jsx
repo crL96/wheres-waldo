@@ -1,6 +1,6 @@
 import styles from "./dropdown.module.css";
 
-function Dropdown({ coordinates, handleSelect }) {
+function Dropdown({ coordinates, handleSelect, characters }) {
     if (!coordinates) return null;
 
     return (
@@ -12,15 +12,13 @@ function Dropdown({ coordinates, handleSelect }) {
                 left: coordinates.x,
             }}
         >
-            <p className={styles.character} onClick={handleSelect}>
-                Waldo
+            {characters.map((character) => {
+                return (
+                    <p className={styles.character} onClick={handleSelect}>
+                {character}
             </p>
-            <p className={styles.character} onClick={handleSelect}>
-                Odlaw
-            </p>
-            <p className={styles.character} onClick={handleSelect}>
-                Wizard
-            </p>
+                );
+            })}
         </div>
     );
 }
