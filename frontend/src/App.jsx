@@ -34,6 +34,8 @@ function App() {
   }
 
   async function handleCharacterSelect(e) {
+    setDropdownCoordinates(null); // Remove dropdown
+    
     const character = e.target.textContent;
 
     const res = await fetch(`${API_URL}/game/attempt`, {
@@ -63,8 +65,6 @@ function App() {
     setTimeout(() => {
       setAttemptRes(null)
     }, 2000)
-
-    setDropdownCoordinates(null); // Remove dropdown
   }
 
   return (
