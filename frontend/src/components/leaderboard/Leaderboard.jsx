@@ -1,6 +1,7 @@
 const API_URL = import.meta.env.VITE_API_URL;
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import styles from "./leaderboard.module.css";
 
 function Leaderboard() {
     const navigate = useNavigate();
@@ -32,7 +33,7 @@ function Leaderboard() {
     return (
         <div>
             <h1>Leaderboard</h1>
-            <table>
+            <table className={styles.table}>
                 <thead>
                     <tr>
                         <th>Name</th>
