@@ -1,0 +1,32 @@
+.dialog {
+    position: fixed;
+    top: 30vh;
+
+    border-radius: 0.5rem;
+
+    padding: 2rem;
+
+    box-shadow: 5px 5px 10px rgba(82, 82, 82, 0.747);
+}
+
+.dialog > form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    border-top: 2px solid black;
+    padding: 1rem;
+}
+
+.dialog > form > * {
+    margin-bottom: 0.5rem;
+}
+
+.dialog > form > button {
+    width: fit-content;
+}
+
+.dialog > form > input {
+    line-height: 1.5;
+    text-align: center;
+}

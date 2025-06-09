@@ -1,5 +1,6 @@
 const API_URL = import.meta.env.VITE_API_URL;
 import { Link, useNavigate } from "react-router-dom";
+import styles from "./endscreen.module.css";
 
 function Endscreen({ score }) {
     const navigate = useNavigate();
@@ -32,13 +33,12 @@ function Endscreen({ score }) {
     }
 
     return (
-        <dialog open>
+        <dialog open className={styles.dialog}>
             <h2>Game Complete!</h2>
             <p>It took you {Math.round((score / 1000) * 100) / 100} seconds</p>
             <form onSubmit={handleScoreSubmit}>
                 <legend>Post your score to the leaderboard</legend>
-                <label htmlFor="name">Name: </label>
-                <input type="text" name="name" id="name" />
+                <input type="text" name="name" id="name" placeholder="Enter your name here"/>
                 <button type="submit">Submit</button>
             </form>
             <p>Don't want to submit? Click <Link to="/">here</Link> to play again</p>
