@@ -1,0 +1,12 @@
+.character {
+    max-height: 150px;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+}
+
+.container > h2 {
+    margin-right: 2rem;
+}

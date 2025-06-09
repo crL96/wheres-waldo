@@ -3,6 +3,7 @@ import './App.css'
 import Dropdown from "./components/dropdown/Dropdown";
 import MessageBox from "./components/messageBox/MessageBox";
 import Endscreen from "./components/endscreen/Endscreen";
+import Characters from "./components/characters/Characters";
 import { useState } from "react";
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -11,6 +12,7 @@ function App() {
   const [dropdownCoordinates, setDropdownCoordinates] = useState();
   const [attemptRes, setAttemptRes] = useState(null);
   const [score, setScore] = useState(null);
+  const [charactersLeft, setCharactersLeft] = useState(["Waldo", "Odlaw", "Wizard"])
 
   function getNormalizedCoordinates(e) {
     const xAbs = e.pageX - e.target.offsetLeft;
@@ -50,6 +52,8 @@ function App() {
     // Update jwt token if a new one is returned
     if(resJson.token) {
       sessionStorage.setItem("jwt-token", resJson.token);
+      //New token only sent on successful attempts, set remaining characters
+      setCharactersLeft(charactersLeft.filter(item => item !== e.target.textContent));
     }
     if (resJson.gameComplete) {
       setScore(resJson.gameComplete);
@@ -65,7 +69,10 @@ function App() {
 
   return (
     <>
-      <h1>Where's Waldo?</h1>
+      <header>
+        <h1>Where's Waldo?</h1>
+        <Characters characters={charactersLeft}/>
+      </header>
       <img src={waldoImg} alt="Where's Waldo" onClick={handleClick}/>
       <Dropdown coordinates={dropdownCoordinates} handleSelect={handleCharacterSelect}/>
       { attemptRes ?
