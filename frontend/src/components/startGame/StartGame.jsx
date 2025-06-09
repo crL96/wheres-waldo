@@ -1,12 +1,22 @@
 const API_URL = import.meta.env.VITE_API_URL;
 import { useNavigate } from "react-router-dom";
 import waldoImg from "../../assets/waldo.webp";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./startGame.module.css";
 
 function StartGame() {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
+
+    // Free tier publish for backend shuts down after inactivity,
+    // start waking process earlier by sending request at mount
+    useEffect(() => {
+        fetch(`${API_URL}/`)
+            .catch(error => {
+                console.log("Backend server not running yet, booting up")
+                console.log(error)
+            })
+    }, []);
 
     async function handleStartGame() {
         try {
