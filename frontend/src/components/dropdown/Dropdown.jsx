@@ -12,9 +12,9 @@ function Dropdown({ coordinates, handleSelect, characters }) {
                 left: coordinates.x,
             }}
         >
-            {characters.map((character) => {
+            {characters.map((character, index) => {
                 return (
-                    <p className={styles.character} onClick={handleSelect}>
+                    <p key={index} className={styles.character} onClick={handleSelect}>
                 {character}
             </p>
                 );
