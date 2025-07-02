@@ -38,14 +38,14 @@ function StartGame() {
             <p>Can you find Waldo and his friends?</p>
             <p>Play the game to see if you can place at the top of the leaderboard</p>
             {loading ?
-                <> <p>
-                    Loading...
-                </p>
-                <p>
-                    (Due to this project being created for educational purposes it uses a free 
-                    tier for publishing the backend that shuts down after inactivity, 
-                    give it a little time to boot up.)
-                </p></> :
+                <>
+                    <span className={styles.loader}></span>
+                    <p>
+                        (Due to this project being created for educational purposes it uses a free 
+                        tier for publishing the backend that shuts down after inactivity, 
+                        give it a little time to boot up.)
+                    </p>
+                </> :
                 <button onClick={handleStartGame}>Start Game</button>
             }
         </div>
